@@ -1,0 +1,26 @@
+{
+    "name": "BOSH CLI",
+    "id": "bosh-cli",
+    "version": "1.0.0",
+    "description": "Installs the BOSH CLI, optionally installing additional dependencies.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "7",
+                "none"
+            ],
+            "default": "latest",
+            "description": "Select or enter a BOSH CLI version."
+        },
+        "install_dependencies": {
+            "type": "boolean",
+            "default": false,
+            "description": "Install additional dependencies."
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}

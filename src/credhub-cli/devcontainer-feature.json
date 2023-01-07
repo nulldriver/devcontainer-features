@@ -1,0 +1,21 @@
+{
+    "name": "CredHub CLI",
+    "id": "credhub-cli",
+    "version": "1.0.0",
+    "description": "Installs the CredHub CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "7",
+                "none"
+            ],
+            "default": "latest",
+            "description": "Select or enter a BOSH CLI version."
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}

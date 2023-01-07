@@ -1,0 +1,10 @@
+{
+    "bosh_install_dependencies": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "bosh-cli": {
+                "install_dependencies": true
+            }
+        }
+    }
+}
