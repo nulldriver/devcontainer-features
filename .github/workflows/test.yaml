@@ -13,8 +13,8 @@ jobs:
     strategy:
       matrix:
         features:
-          - color
-          - hello
+          - bosh-cli
+          - credhub-cli
         baseImage:
           - debian:latest
           - ubuntu:latest
