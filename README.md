@@ -12,16 +12,16 @@ The example below installs the `bosh` and `credhub` cli Features as declared in 
 
 ```jsonc
 {
-	"name": "my-project-devcontainer",
+    "name": "my-project-devcontainer",
     "image": "mcr.microsoft.com/devcontainers/base:ubuntu", // Any generic, debian-based image.
-	"features": {
-		"ghcr.io/nulldriver/devcontainer-features/bosh-cli:1": {
-			"version": "7.1"
-		},
-		"ghcr.io/nulldriver/devcontainer-features/credhub-cli:1": {
-			"version": "2.9"
-		}
-	}
+    "features": {
+        "ghcr.io/nulldriver/devcontainer-features/bosh-cli:1": {
+            "version": "7.1"
+        },
+        "ghcr.io/nulldriver/devcontainer-features/credhub-cli:1": {
+            "version": "2.9"
+        }
+    }
 }
 ```
 
