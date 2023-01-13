@@ -1,5 +1,4 @@
 
-
 # CredHub CLI (credhub-cli)
 
 Installs the CredHub CLI.
@@ -16,7 +15,7 @@ Installs the CredHub CLI.
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | Select or enter a BOSH CLI version. | string | latest |
+| version | Select or enter a CredHub CLI version. | string | latest |
 
 
 
