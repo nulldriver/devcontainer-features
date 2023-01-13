@@ -8,7 +8,7 @@ To reference a Feature from this repository, add the desired Features to your `d
 
 The example below installs the `bosh` and `credhub` cli Features as declared in the [`./src`](./src) directory of this repository.
 
-| See the relevant Feature's README for supported options.
+> See the relevant Feature's README for supported options.
 
 ```jsonc
 {
