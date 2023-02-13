@@ -9,6 +9,5 @@ set -e
 source dev-container-features-test-lib
 
 check "version" bosh --version
-check "has ruby" ruby --version
 
 reportResults

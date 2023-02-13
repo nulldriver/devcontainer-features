@@ -1,7 +1,7 @@
 {
     "name": "BOSH CLI",
     "id": "bosh-cli",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Installs the BOSH CLI, optionally installing additional dependencies.",
     "options": {
         "version": {
@@ -16,8 +16,8 @@
         },
         "install_dependencies": {
             "type": "boolean",
-            "default": false,
-            "description": "Install additional dependencies."
+            "default": true,
+            "description": "Set to `false` to bypass installing additional dependencies."
         }
     },
     "installsAfter": [

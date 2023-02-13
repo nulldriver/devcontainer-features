@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 : ${VERSION:="latest"}
-: ${INSTALL_DEPENDENCIES:=false}
+: ${INSTALL_DEPENDENCIES:=true}
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 

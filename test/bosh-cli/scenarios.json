@@ -3,7 +3,7 @@
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
             "bosh-cli": {
-                "install_dependencies": true
+                "install_dependencies": false
             }
         }
     }
