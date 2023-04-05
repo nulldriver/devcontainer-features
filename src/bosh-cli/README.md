@@ -16,7 +16,7 @@ Installs the BOSH CLI, optionally installing additional dependencies.
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
 | version | Select or enter a BOSH CLI version. | string | latest |
-| install_dependencies | Install additional dependencies. | boolean | false |
+| install_dependencies | Set to `false` to bypass installing additional dependencies. | boolean | true |
 
 
 
