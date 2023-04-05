@@ -1,0 +1,20 @@
+{
+    "name": "ShellSpec CLI",
+    "id": "shellspec-cli",
+    "version": "1.0.0",
+    "description": "Installs the ShellSpec BDD unit testing framework CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none"
+            ],
+            "default": "latest",
+            "description": "Select or enter a ShellSpec CLI version."
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
