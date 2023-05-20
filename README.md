@@ -40,6 +40,7 @@ The `:latest` version annotation is added implicitly if omitted. To pin to a spe
 | Feature       | Description
 | ---           | ---
 | [`bosh-cli`](./src/bosh-cli)           | Install [BOSH CLI](https://bosh.io/docs/cli-v2/), an open source tool for release engineering, deployment, lifecycle management, and monitoring of distributed systems.
+| [`cf-cli`](./src/cf-cli)               | Install [Cloud Foundry CLI](https://bosh.io/docs/cli-v2/), the official command line client for Cloud Foundry.
 | [`credhub-cli`](./src/credhub-cli)     | Install [CredHub CLI](https://github.com/cloudfoundry/credhub-cli), a credential manager for managing passwords, certificates, certificate authorities, ssh keys, rsa keys and arbitrary values (strings and JSON blobs).
 | [`kf-cli`](./src/kf-cli)               | Install [Kf CLI](https://cloud.google.com/migrate/kf/docs/).  Kf offers developers the Cloud Foundry experience while empowering operators to adopt declarative Kubernetes practice.
 | [`shellspec-cli`](./src/shellspec-cli) | Install the [ShellSpec](https://github.com/shellspec/shellspec) BDD unit testing framework CLI.
