@@ -1,0 +1,15 @@
+{
+    "name": "Concourse Fly CLI",
+    "id": "fly-cli",
+    "version": "1.0.0",
+    "description": "Installs the Concourse Fly CLI.",
+    "options": {
+        "url": {
+            "type": "string",
+            "description": "Concourse URL to download the Fly CLI from"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
