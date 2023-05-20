@@ -6,7 +6,12 @@
     "options": {
         "url": {
             "type": "string",
-            "description": "Concourse URL to download the Fly CLI from"
+            "default": "https://ci.concourse-ci.org",
+            "description": "Concourse URL to download the Fly CLI from",
+            "proposals": [
+                "",
+                "https://ci.concourse-ci.org"
+            ]
         }
     },
     "installsAfter": [

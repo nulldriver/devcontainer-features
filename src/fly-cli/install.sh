@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-: ${URL:=https://ci.nulldriver.com}
+: ${URL:=https://ci.concourse-ci.org}
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
