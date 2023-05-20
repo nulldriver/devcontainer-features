@@ -1,0 +1,20 @@
+{
+    "name": "Cloud Foundry CLI",
+    "id": "cf-cli",
+    "version": "1.0.0",
+    "description": "Installs the Cloud Foundry CLI.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none"
+            ],
+            "default": "latest",
+            "description": "Select or enter a Cloud Foundry CLI version."
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
