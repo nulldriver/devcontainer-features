@@ -6,7 +6,8 @@
     "options": {
         "gem": {
             "type": "string",
-            "description": "Name of gem(s) to install. Can be a single gem, or space/comma separated list of gems"
+            "description": "Name of gem(s) to install. Can be a single gem, or space/comma separated list of gems",
+            "default": ""
         },
         "version": {
             "type": "string",
@@ -16,7 +17,7 @@
         "prerelease": {
             "type": "boolean",
             "description": "Allow prerelease versions of a gem to be installed. (Only for listed gems)",
-            "default": "false"
+            "default": false
         }
     },
     "installsAfter": [
