@@ -1,0 +1,25 @@
+{
+    "name": "RubyGems",
+    "id": "gem",
+    "version": "1.0.0",
+    "description": "Installs RubyGems using the gem cli",
+    "options": {
+        "gem": {
+            "type": "string",
+            "description": "Name of gem(s) to install. Can be a single gem, or space/comma separated list of gems"
+        },
+        "version": {
+            "type": "string",
+            "description": "Specify version of gem to install",
+            "default": ""
+        },
+        "prerelease": {
+            "type": "boolean",
+            "description": "Allow prerelease versions of a gem to be installed. (Only for listed gems)",
+            "default": "false"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}

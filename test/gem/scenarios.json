@@ -1,0 +1,12 @@
+{
+    "install-cf-uaac": {
+        "image": "ruby",
+        "features": {
+            "gem": {
+                "gem": "cf-uaac",
+                "version": "4.14.0",
+                "prerelease": false
+            }
+        }
+    }
+}
