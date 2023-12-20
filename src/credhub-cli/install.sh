@@ -4,7 +4,7 @@
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
-set -e
+set -eo pipefail
 
 export TMPDIR=$(mktemp -d /tmp/feature.XXXXXX)
 trap "rm -rf $TMPDIR" EXIT
@@ -101,12 +101,23 @@ export DEBIAN_FRONTEND=noninteractive
 
 ### BEGIN install
 
+REPO="cloudfoundry/credhub-cli"
+ARCH="amd64"
+
 # Soft version matching
-find_version_from_git_tags VERSION "https://github.com/cloudfoundry/credhub-cli" "tags/"
+find_version_from_git_tags VERSION "https://github.com/$REPO" "tags/"
 
 check_packages curl ca-certificates
 echo "Downloading credhub..."
-curl -sL "https://github.com/cloudfoundry/credhub-cli/releases/download/${VERSION}/credhub-linux-${VERSION}.tgz" | tar -zxC "$TMPDIR"
+
+# Try to download the release with the architecture type
+if curl -sL -o /dev/null -w "%{http_code}" "https://github.com/$REPO/releases/download/$VERSION/credhub-linux-$ARCH-$VERSION.tgz" | grep -q "200"; then
+    curl -sL "https://github.com/$REPO/releases/download/$VERSION/credhub-linux-$ARCH-$VERSION.tgz" | tar -zxC "$TMPDIR"
+else
+    # Fall back to the older naming convention
+    curl -sL "https://github.com/$REPO/releases/download/$VERSION/credhub-linux-$VERSION.tgz" | tar -zxC "$TMPDIR"
+fi
+
 install "$TMPDIR/credhub" /usr/local/bin/credhub
 credhub --version
 
