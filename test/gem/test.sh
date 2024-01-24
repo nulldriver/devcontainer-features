@@ -2,6 +2,9 @@
 
 set -e
 
+# This test can be run with the following command (from the root of this repo)
+# devcontainer features test --features gem --base-image mcr.microsoft.com/devcontainers/base:ubuntu .
+
 # Import 'check' command
 source dev-container-features-test-lib
 
