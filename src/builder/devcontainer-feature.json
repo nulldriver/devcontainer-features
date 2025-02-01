@@ -1,0 +1,20 @@
+{
+    "name": "Builder: Static Site Generation Tool",
+    "id": "builder",
+    "version": "1.0.0",
+    "description": "Builder is a streamlined static site generation tool designed with a focus on convention over configuration. https://github.com/jtarchie/builder",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none"
+            ],
+            "default": "latest",
+            "description": "Select or enter a Builder version."
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
