@@ -47,6 +47,7 @@ The `:latest` version annotation is added implicitly if omitted. To pin to a spe
 | [`gem`](./src/gem/)                    | Installs RubyGems using the [gem cli](https://guides.rubygems.org/command-reference/#gem-install).
 | [`kf-cli`](./src/kf-cli)               | Installs [Kf CLI](https://cloud.google.com/migrate/kf/docs/).  Kf offers developers the Cloud Foundry experience while empowering operators to adopt declarative Kubernetes practice.
 | [`shellspec-cli`](./src/shellspec-cli) | Installs the [ShellSpec](https://github.com/shellspec/shellspec) BDD unit testing framework CLI.
+| [`specify-cli`](./src/specify-cli)     | Installs the [GitHub Specify CLI](https://github.com/github/spec-kit) for Spec-Driven Development.
 
 ## Contributing
 

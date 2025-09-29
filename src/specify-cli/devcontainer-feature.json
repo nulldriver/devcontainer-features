@@ -1,0 +1,21 @@
+{
+    "name": "GitHub Specify CLI",
+    "id": "specify-cli",
+    "version": "1.0.0",
+    "description": "Installs the GitHub Specify CLI for Spec-Driven Development.",
+    "options": {
+        "version": {
+            "type": "string",
+            "proposals": [
+                "latest",
+                "none"
+            ],
+            "default": "latest",
+            "description": "Select or enter a Specify CLI version. Use 'latest' for the latest version from the main branch."
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.io/devcontainers/features/python"
+    ]
+}
