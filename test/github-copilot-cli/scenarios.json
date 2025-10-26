@@ -1,0 +1,16 @@
+{
+    "test_defaults_debian": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "github-copilot-cli": {}
+        }
+    },
+    "test_specific_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "github-copilot-cli": {
+                "version": "0.0.350"
+            }
+        }
+    }
+}
