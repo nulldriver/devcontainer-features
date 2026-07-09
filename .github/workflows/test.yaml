@@ -14,8 +14,16 @@ jobs:
       matrix:
         features:
           - bosh-cli
+          - builder
           - ca-certificates
+          - cf-cli
           - credhub-cli
+          - fly-cli
+          - gem
+          - github-copilot-cli
+          - kf-cli
+          - shellspec-cli
+          - specify-cli
         baseImage:
           - debian:latest
           - ubuntu:latest

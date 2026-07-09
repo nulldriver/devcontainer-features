@@ -46,6 +46,7 @@ The `:latest` version annotation is added implicitly if omitted. To pin to a spe
 | [`credhub-cli`](./src/credhub-cli)     | Installs [CredHub CLI](https://github.com/cloudfoundry/credhub-cli), a credential manager for managing passwords, certificates, certificate authorities, ssh keys, rsa keys and arbitrary values (strings and JSON blobs).
 | [`fly-cli`](./src/fly-cli)             | Installs the [Concourse Fly CLI](https://concourse-ci.org/fly.html).
 | [`gem`](./src/gem/)                    | Installs RubyGems using the [gem cli](https://guides.rubygems.org/command-reference/#gem-install).
+| [`github-copilot-cli`](./src/github-copilot-cli) | Installs the [GitHub Copilot CLI](https://github.com/github/copilot-cli), bringing the power of GitHub Copilot to your terminal.
 | [`kf-cli`](./src/kf-cli)               | Installs [Kf CLI](https://cloud.google.com/migrate/kf/docs/).  Kf offers developers the Cloud Foundry experience while empowering operators to adopt declarative Kubernetes practice.
 | [`shellspec-cli`](./src/shellspec-cli) | Installs the [ShellSpec](https://github.com/shellspec/shellspec) BDD unit testing framework CLI.
 | [`specify-cli`](./src/specify-cli)     | Installs the [GitHub Specify CLI](https://github.com/github/spec-kit) for Spec-Driven Development.
