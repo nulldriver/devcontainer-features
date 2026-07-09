@@ -41,6 +41,7 @@ The `:latest` version annotation is added implicitly if omitted. To pin to a spe
 | ---           | ---
 | [`bosh-cli`](./src/bosh-cli)           | Installs [BOSH CLI](https://bosh.io/docs/cli-v2/), an open source tool for release engineering, deployment, lifecycle management, and monitoring of distributed systems.
 | [`builder`](./src/builder)             | Installs [Builder](https://github.com/jtarchie/builder): Static Site Generation Tool.
+| [`ca-certificates`](./src/ca-certificates) | Adds a custom CA certificate to the OS trust store and exports common environment variables (e.g. `NODE_EXTRA_CA_CERTS`, `SSL_CERT_FILE`) for tools that need it set explicitly.
 | [`cf-cli`](./src/cf-cli)               | Installs [Cloud Foundry CLI](https://bosh.io/docs/cli-v2/), the official command line client for Cloud Foundry.
 | [`credhub-cli`](./src/credhub-cli)     | Installs [CredHub CLI](https://github.com/cloudfoundry/credhub-cli), a credential manager for managing passwords, certificates, certificate authorities, ssh keys, rsa keys and arbitrary values (strings and JSON blobs).
 | [`fly-cli`](./src/fly-cli)             | Installs the [Concourse Fly CLI](https://concourse-ci.org/fly.html).

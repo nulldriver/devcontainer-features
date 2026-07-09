@@ -1,0 +1,23 @@
+{
+    "name": "CA Certificates",
+    "id": "ca-certificates",
+    "version": "1.0.0",
+    "description": "Adds a custom CA certificate to the OS trust store and optionally exports common environment variables (e.g. NODE_EXTRA_CA_CERTS, SSL_CERT_FILE) for tools that need it set explicitly.",
+    "options": {
+        "cert": {
+            "type": "string",
+            "description": "PEM-encoded CA certificate content to trust. May contain multiple concatenated certificates. Leave empty to skip installation.",
+            "default": ""
+        },
+        "cert_filename": {
+            "type": "string",
+            "description": "Filename to use when installing the certificate under /usr/local/share/ca-certificates/. Must end in .crt.",
+            "default": "custom-ca.crt"
+        },
+        "set_env_vars": {
+            "type": "boolean",
+            "description": "Export common CA-related environment variables (NODE_EXTRA_CA_CERTS, SSL_CERT_FILE, SSL_CERT_DIR, REQUESTS_CA_BUNDLE, CURL_CA_BUNDLE, GIT_SSL_CAINFO, PIP_CERT, AWS_CA_BUNDLE) pointing at the installed certificate/bundle. Only applies when 'cert' is set.",
+            "default": true
+        }
+    }
+}

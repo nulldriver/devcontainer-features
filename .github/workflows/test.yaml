@@ -14,6 +14,7 @@ jobs:
       matrix:
         features:
           - bosh-cli
+          - ca-certificates
           - credhub-cli
         baseImage:
           - debian:latest

@@ -1,0 +1,18 @@
+{
+    "install_no_cert": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "ca-certificates": {}
+        }
+    },
+    "install_with_cert": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "ca-certificates": {
+                "cert": "-----BEGIN CERTIFICATE-----\nMIIDLzCCAhegAwIBAgIUPOtTKtCMB+ikVHuRwPGlvNJPOigwDQYJKoZIhvcNAQEL\nBQAwJzElMCMGA1UEAwwcZGV2Y29udGFpbmVyLWZlYXR1cmUtdGVzdC1jYTAeFw0y\nNjA3MDkyMTA0NDVaFw0zNjA3MDYyMTA0NDVaMCcxJTAjBgNVBAMMHGRldmNvbnRh\naW5lci1mZWF0dXJlLXRlc3QtY2EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK\nAoIBAQCf90atD0Cya/fmuEHT3tvLCVImkoNE9Exqe85uWdm6DZ9BBf8l3fRkMmC/\nAlBJicJuZPBHxIVUdBfVwK1xx78zn3NEwNgFZLf833hKtXM3VKa6pq8FjXOhS7TJ\n08A887vl7LtkXs+YcWE60uqvoY1kOCoViULGdNEK2VKIVEqxKTstM5JrDMIvOyRZ\nNP6HhF2PRKwP+ZZmlWi3E/g2BODghbqs21KI5kkJOBYZu0OtvdElrhSQtns487R+\nVvkV8u0uLxxnaHD5tf45eeNg3hsJbb+voOq7Ckv+Dl/IKvy/kMY/lYj+C5PAuDNC\nTNqTZxAgVeh7IkuLvIVTsXep95PRAgMBAAGjUzBRMB0GA1UdDgQWBBSrQj/ruABD\nabPdy9Nh9jR9Kq+XFTAfBgNVHSMEGDAWgBSrQj/ruABDabPdy9Nh9jR9Kq+XFTAP\nBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCfSem1M8Q2bY31tEWD\niaJA9ZVgz1AQgKdABwadnaOSd7lnxo6MasTC3BsIQWnazBQdxImddLjNFwRL46UV\nI1T4cxFnjhYa6UruxpTwMQDbOccECWjjMrYN3hgawkkgytNhQjm35ugPwY6Rr6uS\nPgkDW4GCjOKlhtZxjbjE4yjR1SLSOhA9pB7Wf/2lgco6IFTZg15h3mramyZDP6Mk\nlMyxl1iD+NHIz1QWAQCa2DfTzC4W2j/Xyx1n6UcG3u1lyT2cJyParb5CnuwqhCSC\nUAzDMkIdpHs3qQyCIVlY4y3g0jNxlwJS+t5uubbuwmev4aeaj/re2FoDyodGSUzo\nweru\n-----END CERTIFICATE-----\n",
+                "cert_filename": "custom-ca.crt",
+                "set_env_vars": true
+            }
+        }
+    }
+}
