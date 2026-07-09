@@ -1,0 +1,18 @@
+{
+    "specify-cli_defaults": {
+        "image": "mcr.microsoft.com/devcontainers/python",
+        "features": {
+            "specify-cli": {
+            }
+        }
+    },
+    "specify-cli_version": {
+        "image": "mcr.microsoft.com/devcontainers/python",
+        "features": {
+            "specify-cli": {
+                // Installing tag v0.0.68 provides specify-cli v0.0.19
+                "version": "v0.0.68"
+            }
+        }
+    }
+}

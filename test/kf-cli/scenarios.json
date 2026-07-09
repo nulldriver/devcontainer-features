@@ -1,9 +1,9 @@
 {
-    "install_copilot_cli_specific_version": {
+    "install_kf_cli_specific_version": {
         "image": "mcr.microsoft.com/devcontainers/base:debian",
         "features": {
-            "github-copilot-cli": {
-                "version": "0.0.350"
+            "kf-cli": {
+                "version": "2.11.28"
             }
         }
     }

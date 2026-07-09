@@ -1,21 +1,25 @@
 {
-    "name": "GitHub Specify CLI",
+    "name": "GitHub Specify CLI (via uv)",
     "id": "specify-cli",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Installs the GitHub Specify CLI for Spec-Driven Development.",
     "options": {
         "version": {
             "type": "string",
             "proposals": [
-                "latest",
-                "none"
+                "latest"
             ],
             "default": "latest",
             "description": "Select or enter a Specify CLI version. Use 'latest' for the latest version from the main branch."
+        },
+        "uninstall_uv": {
+            "type": "boolean",
+            "default": false,
+            "description": "Uninstall uv after installing Specify CLI."
         }
     },
     "installsAfter": [
-        "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.io/devcontainers-extra/features/uv",
         "ghcr.io/devcontainers/features/python"
     ]
 }

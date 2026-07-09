@@ -4,6 +4,6 @@ set -e
 
 source dev-container-features-test-lib
 
-check "credhub version" credhub --version
+check "kf version is equal to 2.11.28" sh -c "kf version | grep '2.11.28'"
 
 reportResults

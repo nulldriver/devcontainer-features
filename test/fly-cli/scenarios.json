@@ -1,9 +1,9 @@
 {
-    "install_copilot_cli_specific_version": {
+    "install_fly_cli_specific_url": {
         "image": "mcr.microsoft.com/devcontainers/base:debian",
         "features": {
-            "github-copilot-cli": {
-                "version": "0.0.350"
+            "fly-cli": {
+                "url": "https://ci.concourse-ci.org"
             }
         }
     }

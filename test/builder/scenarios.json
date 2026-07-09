@@ -1,9 +1,9 @@
 {
-    "install_copilot_cli_specific_version": {
+    "install_builder_specific_version": {
         "image": "mcr.microsoft.com/devcontainers/base:debian",
         "features": {
-            "github-copilot-cli": {
-                "version": "0.0.350"
+            "builder": {
+                "version": "1.0.1"
             }
         }
     }

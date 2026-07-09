@@ -1,5 +1,13 @@
 {
-    "bosh_install_dependencies": {
+    "install_bosh_specific_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:debian",
+        "features": {
+            "bosh-cli": {
+                "version": "7.9.12"
+            }
+        }
+    },
+    "install_bosh_using_install_dependencies": {
         "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
         "features": {
             "bosh-cli": {

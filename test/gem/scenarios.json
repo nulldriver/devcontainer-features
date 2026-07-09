@@ -1,10 +1,10 @@
 {
-    "install-cf-uaac": {
-        "image": "ruby",
+    "install_gem": {
+        "image": "mcr.microsoft.com/devcontainers/ruby",
         "features": {
             "gem": {
                 "gem": "cf-uaac",
-                "version": "4.14.0",
+                "version": "4.28.0",
                 "prerelease": false
             }
         }
