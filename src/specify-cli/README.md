@@ -1,5 +1,5 @@
 
-# GitHub Specify CLI (specify-cli)
+# GitHub Specify CLI (via uv) (specify-cli)
 
 Installs the GitHub Specify CLI for Spec-Driven Development.
 
@@ -16,6 +16,7 @@ Installs the GitHub Specify CLI for Spec-Driven Development.
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
 | version | Select or enter a Specify CLI version. Use 'latest' for the latest version from the main branch. | string | latest |
+| uninstall_uv | Uninstall uv after installing Specify CLI. | boolean | false |
 
 ## About
 
