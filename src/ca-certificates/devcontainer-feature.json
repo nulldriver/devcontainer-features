@@ -1,7 +1,7 @@
 {
     "name": "CA Certificates",
     "id": "ca-certificates",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Adds a custom CA certificate to the OS trust store and optionally exports common environment variables (e.g. NODE_EXTRA_CA_CERTS, SSL_CERT_FILE) for tools that need it set explicitly.",
     "options": {
         "cert": {
