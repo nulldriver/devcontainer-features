@@ -3,6 +3,7 @@
 : ${CERT:=""}
 : ${CERT_FILENAME:="custom-ca.crt"}
 : ${SET_ENV_VARS:="true"}
+: ${JAVA_TRUSTSTORE_PASSWORD:="changeit"}
 
 set -e
 
@@ -63,6 +64,46 @@ fi
 CERT_PATH="/usr/local/share/ca-certificates/${CERT_FILENAME}"
 BUNDLE_PATH="/etc/ssl/certs/ca-certificates.crt"
 
+# Imports the certificate into the truststore ("cacerts") of whichever JDK's
+# "keytool" is found on PATH. This is a best-effort operation: if no JDK is
+# installed (or the JDK feature installs after this one), it is silently
+# skipped since Java support is optional and not guaranteed to be present.
+import_into_java_truststore() {
+    if ! command -v keytool >/dev/null 2>&1; then
+        echo "keytool not found on PATH. Skipping Java truststore import..."
+        return 0
+    fi
+
+    local keytool_path java_home cacerts_path java_alias
+    keytool_path="$(readlink -f "$(command -v keytool)")"
+    java_home="${JAVA_HOME:-$(dirname "$(dirname "${keytool_path}")")}"
+
+    if [ -f "${java_home}/lib/security/cacerts" ]; then
+        cacerts_path="${java_home}/lib/security/cacerts"
+    elif [ -f "${java_home}/jre/lib/security/cacerts" ]; then
+        cacerts_path="${java_home}/jre/lib/security/cacerts"
+    else
+        echo "(!) Found keytool but could not locate a 'cacerts' truststore under ${java_home}. Skipping Java truststore import..."
+        return 0
+    fi
+
+    # Derive a keytool-safe alias from the certificate filename (strip the
+    # .crt suffix, replace anything but alphanumerics/dot/dash/underscore).
+    java_alias="${CERT_FILENAME%.crt}"
+    java_alias="$(printf '%s' "${java_alias}" | tr -c 'A-Za-z0-9._-' '-')"
+
+    echo "Importing custom CA certificate into Java truststore at ${cacerts_path}..."
+
+    # Remove any pre-existing alias so re-running this script is idempotent.
+    keytool -delete -noprompt -alias "${java_alias}" -keystore "${cacerts_path}" -storepass "${JAVA_TRUSTSTORE_PASSWORD}" >/dev/null 2>&1 || true
+
+    keytool -importcert -noprompt -trustcacerts \
+        -alias "${java_alias}" \
+        -file "${CERT_PATH}" \
+        -keystore "${cacerts_path}" \
+        -storepass "${JAVA_TRUSTSTORE_PASSWORD}"
+}
+
 echo "Installing custom CA certificate to ${CERT_PATH}..."
 printf '%s\n' "${CERT}" > "${CERT_PATH}"
 chmod 644 "${CERT_PATH}"
@@ -107,6 +148,8 @@ export AWS_CA_BUNDLE="${BUNDLE_PATH}"
 ${ENV_BLOCK_END}
 EOF
     chmod 755 /etc/profile.d/00-ca-certificates.sh
+
+    import_into_java_truststore
 fi
 
 ### END install

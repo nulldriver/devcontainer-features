@@ -30,6 +30,16 @@ Notes:
 - This is a `devcontainer.json` setting, not something this feature can set for you automatically — the feature consumer must add it to their own `devcontainer.json`.
 - If you're composing a custom base image or Dockerfile that installs tools before features run at all, `overrideFeatureInstallOrder` won't help — you'd need to bake the CA trust into the image itself instead.
 
+## Java truststore import
+
+When `set_env_vars` is `true` (the default) and a `cert` is provided, this feature also attempts to import the certificate into the Java truststore (`cacerts`) — not just export environment variables. Specifically:
+
+- It looks for a `keytool` binary on `PATH`. If none is found (e.g. no JDK feature is installed, or a JDK feature installs *after* this one), the import is silently skipped and does not fail the build.
+- `JAVA_HOME` is derived from the location of `keytool` if not already set, and the truststore is located at `$JAVA_HOME/lib/security/cacerts` (or `$JAVA_HOME/jre/lib/security/cacerts` for older JDK layouts).
+- The certificate is imported under an alias derived from `cert_filename`, using the standard JDK default truststore password `changeit`. If your JDK feature changes this default password, set the `java_truststore_password` option to match.
+- Only the JDK found on `PATH` is targeted — if multiple JDKs are installed side-by-side, only one truststore is updated.
+- Because this depends on a JDK already being installed and on `PATH`, list a Java feature (e.g. `ghcr.io/devcontainers/features/java`) *before* `ca-certificates` in your `devcontainer.json`, or otherwise ensure it installs first (this feature's `installsAfter` already prefers this ordering when both are declared). Note this is in tension with the `overrideFeatureInstallOrder` recommendation above for OS-level trust — if you force `ca-certificates` to run first for that reason, the Java truststore import will be skipped, and you'll need to run `keytool -importcert` manually afterwards.
+
 ## Learn More
 
 - [Dev Container Features spec: feature installation order](https://containers.dev/implementors/features/#installation-order) - explains `installsAfter`, `dependsOn`, and `overrideFeatureInstallOrder`
