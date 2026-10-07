@@ -26,4 +26,9 @@ CACERTS="$(find_cacerts)"
 
 check "cert imported into Java truststore" bash -c "keytool -list -keystore '${CACERTS}' -storepass changeit -alias custom-ca"
 
+check "certificate contents match" bash -c 'cmp <(openssl x509 -in /usr/local/share/ca-certificates/custom-ca.crt -outform DER) <(keytool -exportcert -keystore "'"${CACERTS}"'" -storepass changeit -alias custom-ca)'
+check "environment exports available" bash -lc 'test "$NODE_EXTRA_CA_CERTS" = "/usr/local/share/ca-certificates/custom-ca.crt" && test "$SSL_CERT_FILE" = "/etc/ssl/certs/ca-certificates.crt"'
+check "repeated import succeeds" /usr/local/bin/import-java-certificates
+check "importer regression cases" sudo -n env JAVA_HOME="${JAVA_HOME}" bash "$(dirname "${BASH_SOURCE[0]}")/java_import_regressions.sh"
+
 reportResults

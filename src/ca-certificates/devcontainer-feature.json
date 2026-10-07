@@ -1,8 +1,8 @@
 {
     "name": "CA Certificates",
     "id": "ca-certificates",
-    "version": "1.1.0",
-    "description": "Adds a custom CA certificate to the OS trust store, optionally imports it into the Java truststore (cacerts) if a JDK is present, and optionally exports common environment variables (e.g. NODE_EXTRA_CA_CERTS, SSL_CERT_FILE) for tools that need it set explicitly.",
+    "version": "1.1.1",
+    "description": "Adds a custom CA certificate to the OS trust store, optionally imports it into the active Java truststore during installation and container creation, and optionally exports common CA environment variables.",
     "options": {
         "cert": {
             "type": "string",
@@ -16,17 +16,17 @@
         },
         "set_env_vars": {
             "type": "boolean",
-            "description": "Export common CA-related environment variables (NODE_EXTRA_CA_CERTS, SSL_CERT_FILE, SSL_CERT_DIR, REQUESTS_CA_BUNDLE, CURL_CA_BUNDLE, GIT_SSL_CAINFO, PIP_CERT, AWS_CA_BUNDLE) pointing at the installed certificate/bundle, and import the certificate into the Java truststore (cacerts) if a JDK's 'keytool' is found on PATH. Only applies when 'cert' is set.",
+            "description": "Export common CA-related environment variables (NODE_EXTRA_CA_CERTS, SSL_CERT_FILE, SSL_CERT_DIR, REQUESTS_CA_BUNDLE, CURL_CA_BUNDLE, GIT_SSL_CAINFO, PIP_CERT, AWS_CA_BUNDLE) and import the certificate into the active Java truststore during installation and container creation. Only applies when 'cert' is set.",
             "default": true
         },
         "java_truststore_password": {
             "type": "string",
-            "description": "Password for the Java truststore (cacerts) used when importing the certificate via keytool. Only applies when 'cert' and 'set_env_vars' are set and a JDK's 'keytool' is found on PATH.",
+            "description": "Password for the Java truststore (cacerts) used for immediate and deferred imports via keytool. Only applies when 'cert' is set and 'set_env_vars' is true.",
             "default": "changeit"
         }
     },
+    "onCreateCommand": "/usr/local/bin/import-java-certificates",
     "installsAfter": [
-        "ghcr.io/devcontainers/features/common-utils",
-        "ghcr.io/devcontainers/features/java"
+        "ghcr.io/devcontainers/features/common-utils"
     ]
 }

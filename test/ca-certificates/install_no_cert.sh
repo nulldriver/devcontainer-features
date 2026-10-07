@@ -9,4 +9,7 @@ check "no cert file installed" bash -c '[ ! -f /usr/local/share/ca-certificates/
 
 check "NODE_EXTRA_CA_CERTS not set" bash -lc '[ -z "${NODE_EXTRA_CA_CERTS:-}" ]'
 
+check "Java import not configured" test ! -f /usr/local/share/ca-certificates-feature/java.conf
+check "Java importer no-op" /usr/local/bin/import-java-certificates
+
 reportResults

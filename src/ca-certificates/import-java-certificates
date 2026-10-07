@@ -1,0 +1,96 @@
+#!/bin/bash
+# Import the configured corporate CA into the active Java truststore.
+
+set -euo pipefail
+
+readonly CONFIG_DIR="/usr/local/share/ca-certificates-feature"
+if [[ ! -f "${CONFIG_DIR}/java.conf" ]]; then
+  echo "Java CA import is not enabled. Skipping..."
+  exit 0
+fi
+
+# shellcheck source=/dev/null
+source "${CONFIG_DIR}/java.conf"
+readonly CERT_FILENAME CERT_PATH
+
+if [[ "$#" -gt 1 ]]; then
+  echo "Usage: $0 [jdk-home]" >&2
+  exit 1
+fi
+
+if [[ "$#" -eq 1 ]]; then
+  JAVA_HOME="$1"
+elif [[ -n "${JAVA_HOME:-}" && -x "${JAVA_HOME}/bin/keytool" ]]; then
+  JAVA_HOME="$(readlink -f "${JAVA_HOME}")"
+elif command -v keytool >/dev/null 2>&1; then
+  JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v keytool)")")")"
+else
+  echo "No JDK found. Skipping Java CA import for now."
+  exit 0
+fi
+
+readonly KEYTOOL="${JAVA_HOME}/bin/keytool"
+if [[ ! -x "${KEYTOOL}" ]]; then
+  echo "(!) Cannot find keytool under ${JAVA_HOME}." >&2
+  exit 1
+fi
+
+if [[ -f "${JAVA_HOME}/lib/security/cacerts" ]]; then
+  readonly CACERTS="${JAVA_HOME}/lib/security/cacerts"
+elif [[ -f "${JAVA_HOME}/jre/lib/security/cacerts" ]]; then
+  readonly CACERTS="${JAVA_HOME}/jre/lib/security/cacerts"
+else
+  echo "(!) Cannot locate the Java truststore under ${JAVA_HOME}." >&2
+  exit 1
+fi
+
+# Resolve the JDK before sudo changes PATH and discards JAVA_HOME.
+if [[ ! -r "${CONFIG_DIR}/java-password" || ! -w "${CACERTS}" ]]; then
+  if [[ "$(id -u)" -ne 0 ]]; then
+    if ! command -v sudo >/dev/null 2>&1; then
+      printf '%s\n' \
+        "(!) Java CA import requires root access." \
+        "Run this command as root or configure passwordless sudo." >&2
+      exit 1
+    fi
+    exec sudo -n -- "$0" "${JAVA_HOME}"
+  fi
+fi
+
+export JAVA_CA_STORE_PASSWORD
+JAVA_CA_STORE_PASSWORD="$(cat "${CONFIG_DIR}/java-password" && printf '.')"
+JAVA_CA_STORE_PASSWORD="${JAVA_CA_STORE_PASSWORD%.}"
+java_alias="${CERT_FILENAME%.crt}"
+java_alias="$(printf '%s' "${java_alias}" | tr -c 'A-Za-z0-9._-' '-')"
+
+WORK_DIR="$(mktemp -d)"
+readonly WORK_DIR
+trap 'rm -rf "${WORK_DIR}"' EXIT
+openssl x509 -in "${CERT_PATH}" -outform DER -out "${WORK_DIR}/certificate.der"
+
+# keytool reports some errors on stdout, so retain its diagnostics on failure.
+if store_info="$("${KEYTOOL}" -list -keystore "${CACERTS}" \
+  -storepass:env JAVA_CA_STORE_PASSWORD)"; then
+  :
+else
+  printf '%s\n' "${store_info}" >&2
+  exit 1
+fi
+if "${KEYTOOL}" -list -alias "${java_alias}" -keystore "${CACERTS}" \
+  -storepass:env JAVA_CA_STORE_PASSWORD >/dev/null 2>&1; then
+  "${KEYTOOL}" -exportcert -alias "${java_alias}" -keystore "${CACERTS}" \
+    -storepass:env JAVA_CA_STORE_PASSWORD -file "${WORK_DIR}/existing.der"
+  if cmp -s "${WORK_DIR}/certificate.der" "${WORK_DIR}/existing.der"; then
+    echo "Custom CA certificate is already trusted by Java at ${CACERTS}."
+    exit 0
+  fi
+  "${KEYTOOL}" -delete -alias "${java_alias}" -keystore "${CACERTS}" \
+    -storepass:env JAVA_CA_STORE_PASSWORD
+fi
+
+echo "Importing custom CA certificate into Java truststore at ${CACERTS}..."
+"${KEYTOOL}" -importcert -noprompt -trustcacerts \
+  -alias "${java_alias}" \
+  -file "${CERT_PATH}" \
+  -keystore "${CACERTS}" \
+  -storepass:env JAVA_CA_STORE_PASSWORD
