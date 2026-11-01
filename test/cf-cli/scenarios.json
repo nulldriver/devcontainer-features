@@ -1,4 +1,10 @@
 {
+    "latest_release": {
+        "image": "mcr.microsoft.com/devcontainers/base:resolute",
+        "features": {
+            "cf-cli": {}
+        }
+    },
     "native_architecture": {
         "image": "mcr.microsoft.com/devcontainers/base:resolute",
         "features": {
