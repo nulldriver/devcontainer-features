@@ -102,7 +102,6 @@ export DEBIAN_FRONTEND=noninteractive
 ### BEGIN install
 
 REPO="cloudfoundry/credhub-cli"
-ARCH="amd64"
 
 # Soft version matching
 find_version_from_git_tags VERSION "https://github.com/$REPO" "tags/"
@@ -110,13 +109,38 @@ find_version_from_git_tags VERSION "https://github.com/$REPO" "tags/"
 check_packages curl ca-certificates
 echo "Downloading credhub..."
 
-# Try to download the release with the architecture type
-if curl -sL -o /dev/null -w "%{http_code}" "https://github.com/$REPO/releases/download/$VERSION/credhub-linux-$ARCH-$VERSION.tgz" | grep -q "200"; then
-    curl -sL "https://github.com/$REPO/releases/download/$VERSION/credhub-linux-$ARCH-$VERSION.tgz" | tar -zxC "$TMPDIR"
-else
-    # Fall back to the older naming convention
-    curl -sL "https://github.com/$REPO/releases/download/$VERSION/credhub-linux-$VERSION.tgz" | tar -zxC "$TMPDIR"
-fi
+archive="${TMPDIR}/credhub.tgz"
+download_url="https://github.com/${REPO}/releases/download/${VERSION}/credhub-linux-${architecture}-${VERSION}.tgz"
+http_status="$(curl -sSL --retry 3 -o "${archive}" -w '%{http_code}' "${download_url}")"
+
+case "${http_status}" in
+    200)
+        tar -xzf "${archive}" -C "${TMPDIR}"
+        ;;
+    404)
+        if [ "${architecture}" = "amd64" ]; then
+            # Older unqualified Linux archives contain AMD64 binaries only.
+            curl -fsSL --retry 3 "https://github.com/${REPO}/releases/download/${VERSION}/credhub-linux-${VERSION}.tgz" | tar -zxC "${TMPDIR}"
+        else
+            if ! command -v go >/dev/null 2>&1; then
+                echo "ARM64 source builds require Go. Add ghcr.io/devcontainers/features/go:1 to your devcontainer features." >&2
+                exit 1
+            fi
+            echo "No ARM64 release archive; building CredHub ${VERSION} from its source tag."
+            mkdir -p "${TMPDIR}/source"
+            curl -fsSL --retry 3 "https://github.com/${REPO}/archive/refs/tags/${VERSION}.tar.gz" | tar -xz --strip-components=1 -C "${TMPDIR}/source"
+            (
+                cd "${TMPDIR}/source"
+                CGO_ENABLED=0 GOTOOLCHAIN=local GOOS=linux GOARCH="${architecture}" \
+                    go build -mod=vendor -ldflags "-X code.cloudfoundry.org/credhub-cli/version.Version=${VERSION}" -o "${TMPDIR}/credhub" .
+            )
+        fi
+        ;;
+    *)
+        echo "Failed to download CredHub: HTTP ${http_status} from ${download_url}" >&2
+        exit 1
+        ;;
+esac
 
 install "$TMPDIR/credhub" /usr/local/bin/credhub
 credhub --version

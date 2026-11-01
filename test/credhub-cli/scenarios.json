@@ -1,7 +1,23 @@
 {
+    "native_architecture": {
+        "image": "mcr.microsoft.com/devcontainers/base:resolute",
+        "features": {
+            "ghcr.io/devcontainers/features/go:1": {
+                "version": "1.27.2",
+                "installGoTools": false
+            },
+            "credhub-cli": {
+                "version": "2.9.62"
+            }
+        }
+    },
     "install_credhub_cli_specific_version": {
         "image": "mcr.microsoft.com/devcontainers/base:debian",
         "features": {
+            "ghcr.io/devcontainers/features/go:1": {
+                "version": "1.27.2",
+                "installGoTools": false
+            },
             "credhub-cli": {
                 "version": "2.9.50"
             }

@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 : ${URL:=https://ci.concourse-ci.org}
+: ${VERSION:=""}
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
-set -e
+set -eo pipefail
 
 export TMPDIR=$(mktemp -d /tmp/feature.XXXXXX)
 trap "rm -rf $TMPDIR" EXIT
@@ -59,11 +60,16 @@ export DEBIAN_FRONTEND=noninteractive
 
 ### BEGIN install
 
-# Soft version matching
 check_packages curl ca-certificates
 echo "Downloading fly..."
-curl -SL "$URL/api/v1/cli?arch=amd64&platform=linux" -o "$TMPDIR/fly"
+if [ -n "${VERSION}" ]; then
+    VERSION="${VERSION#v}"
+    curl -fsSL --retry 3 "https://github.com/concourse/concourse/releases/download/v${VERSION}/fly-${VERSION}-linux-${architecture}.tgz" | tar -zxC "$TMPDIR"
+else
+    curl -fsSL --retry 3 "${URL%/}/api/v1/cli?arch=${architecture}&platform=linux" -o "$TMPDIR/fly"
+fi
 install "$TMPDIR/fly" /usr/local/bin/fly
+fly --version
 
 ### END install
 

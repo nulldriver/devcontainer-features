@@ -1,4 +1,13 @@
 {
+    "native_architecture": {
+        "image": "mcr.microsoft.com/devcontainers/base:resolute",
+        "features": {
+            "fly-cli": {
+                "version": "8.3.2",
+                "url": "https://unused.invalid"
+            }
+        }
+    },
     "install_fly_cli_specific_url": {
         "image": "mcr.microsoft.com/devcontainers/base:debian",
         "features": {

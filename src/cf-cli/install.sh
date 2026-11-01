@@ -4,7 +4,7 @@
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
-set -e
+set -eo pipefail
 
 export TMPDIR=$(mktemp -d /tmp/feature.XXXXXX)
 trap "rm -rf $TMPDIR" EXIT
@@ -101,13 +101,32 @@ export DEBIAN_FRONTEND=noninteractive
 
 ### BEGIN install
 
-# Soft version matching
-find_version_from_git_tags VERSION "https://github.com/cloudfoundry/cli"
-
 check_packages curl ca-certificates
+# Tags can precede release assets. Default installs must select a published release.
+case "${VERSION}" in
+    latest|current|lts)
+        release_url="$(curl -fsSL --retry 3 -o /dev/null -w '%{url_effective}' https://github.com/cloudfoundry/cli/releases/latest)"
+        VERSION="${release_url##*/}"
+        VERSION="${VERSION#v}"
+        if [[ ! "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Could not resolve a stable CF CLI release from ${release_url}" >&2
+            exit 1
+        fi
+        echo "VERSION=${VERSION}"
+        ;;
+    *)
+        find_version_from_git_tags VERSION "https://github.com/cloudfoundry/cli"
+        ;;
+esac
 echo "Downloading cf..."
-curl -SL "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${VERSION}" | tar -zxC "$TMPDIR"
+if [ "${architecture}" = "arm64" ]; then
+    download_url="https://github.com/cloudfoundry/cli/releases/download/v${VERSION}/cf${VERSION%%.*}-cli_${VERSION}_linux_arm64.tgz"
+else
+    download_url="https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${VERSION}"
+fi
+curl -fsSL --retry 3 "${download_url}" | tar -zxC "$TMPDIR"
 install "$TMPDIR/cf" /usr/local/bin/cf
+cf version
 
 ### END install
 

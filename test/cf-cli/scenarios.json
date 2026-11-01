@@ -1,4 +1,18 @@
 {
+    "latest_release": {
+        "image": "mcr.microsoft.com/devcontainers/base:resolute",
+        "features": {
+            "cf-cli": {}
+        }
+    },
+    "native_architecture": {
+        "image": "mcr.microsoft.com/devcontainers/base:resolute",
+        "features": {
+            "cf-cli": {
+                "version": "8.19.0"
+            }
+        }
+    },
     "install_cf_cli_specific_version": {
         "image": "mcr.microsoft.com/devcontainers/base:debian",
         "features": {
