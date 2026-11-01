@@ -1,7 +1,7 @@
 {
     "name": "Cloud Foundry CLI",
     "id": "cf-cli",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Installs the Cloud Foundry CLI.",
     "options": {
         "version": {

@@ -1,7 +1,7 @@
 {
     "name": "CredHub CLI",
     "id": "credhub-cli",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Installs the CredHub CLI.",
     "options": {
         "version": {
@@ -16,6 +16,7 @@
         }
     },
     "installsAfter": [
-        "ghcr.io/devcontainers/features/common-utils"
+        "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.io/devcontainers/features/go"
     ]
 }

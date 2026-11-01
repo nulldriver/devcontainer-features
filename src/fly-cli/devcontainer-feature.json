@@ -1,16 +1,25 @@
 {
     "name": "Concourse Fly CLI",
     "id": "fly-cli",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Installs the Concourse Fly CLI.",
     "options": {
         "url": {
             "type": "string",
             "default": "https://ci.concourse-ci.org",
-            "description": "Concourse URL to download the Fly CLI from",
+            "description": "Concourse URL to download the Fly CLI from when version is empty",
             "proposals": [
                 "",
                 "https://ci.concourse-ci.org"
+            ]
+        },
+        "version": {
+            "type": "string",
+            "default": "",
+            "description": "Optional exact Concourse release version to download from GitHub instead of the configured URL.",
+            "proposals": [
+                "",
+                "8.3.2"
             ]
         }
     },

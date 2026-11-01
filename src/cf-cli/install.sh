@@ -4,7 +4,7 @@
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
-set -e
+set -eo pipefail
 
 export TMPDIR=$(mktemp -d /tmp/feature.XXXXXX)
 trap "rm -rf $TMPDIR" EXIT
@@ -106,8 +106,14 @@ find_version_from_git_tags VERSION "https://github.com/cloudfoundry/cli"
 
 check_packages curl ca-certificates
 echo "Downloading cf..."
-curl -SL "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${VERSION}" | tar -zxC "$TMPDIR"
+if [ "${architecture}" = "arm64" ]; then
+    download_url="https://github.com/cloudfoundry/cli/releases/download/v${VERSION}/cf${VERSION%%.*}-cli_${VERSION}_linux_arm64.tgz"
+else
+    download_url="https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${VERSION}"
+fi
+curl -fsSL --retry 3 "${download_url}" | tar -zxC "$TMPDIR"
 install "$TMPDIR/cf" /usr/local/bin/cf
+cf version
 
 ### END install
 
